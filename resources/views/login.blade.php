@@ -9,12 +9,11 @@
                     <h2 class="h2">Đăng nhập</h2>
                     <hr/>
                     <div class="form-floating mb-3">
-                        <input class="form-control" name="email"
-                        />
+                        <input type="email" class="form-control" name="email"/>
                         <label for="email" class="form-label">Email</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input name="password" class="form-control"/>
+                        <input type="password" name="password" class="form-control"/>
                         <label for="password" class="form-label">Mật khẩu</label>
                     </div>
                     <div class="form-floating mb-3">

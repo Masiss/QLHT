@@ -49,6 +49,19 @@ build:
         node-version: '12'
 
         check-latest: true
+    - name: Add SSH key
+      env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+                  mkdir -p /home/runner/.ssh
+                  # Replace example.com with the hostname of the machine
+                  # you're SSH-ing into
+                  ssh-keyscan example.com >> /home/runner/.ssh/known_hosts
+                  # DOKKU_SSH_KEY is the name of the repository secret
+                  echo "${{ secrets.DOKKU_SSH_KEY }}" > /home/runner/.ssh/github_actions
+                  chmod 600 /home/runner/.ssh/github_actions
+                  ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
+                  ssh-add /home/runner/.ssh/github_actions
 
     - name: Install NPM dependencies
 
@@ -56,4 +69,33 @@ build:
 
     - name: Compile assets for production
       run: npm run production
+deploy:
+
+  runs-on: ubuntu-latest
+
+  steps:
+
+    - name: Checkout
+
+      uses: actions/checkout@v2
+
+    - name: Deployment
+
+      uses: appleboy/ssh-action@main
+
+      with:
+
+        host: ${{ secrets.SSH_HOST }}
+
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+        username: ${{ secrets.SSH_USERNAME }}
+
+        script: |
+
+          cd /var/www/html/
+
+          git checkout -f 
+
+          git pull  
 

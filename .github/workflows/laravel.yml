@@ -19,9 +19,15 @@ jobs:
           echo "APP_ENV=production" >> .env
           php artisan key:generate
 
-      - name: Build Laravel
+      - name: Install Node.js dependencies
         run: |
-          php artisan build
+          cd ./laravel
+          npm install
+
+      - name: Build JavaScript
+        run: |
+          cd ./laravel
+          npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

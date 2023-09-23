@@ -28,6 +28,8 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           npm install --production
+          npm install -g vite
+
 
       - name: Build JavaScript
         run: |

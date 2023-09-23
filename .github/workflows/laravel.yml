@@ -46,10 +46,10 @@ jobs:
           echo "APP_ENV=production" >> .env
           php artisan key:generate
 
-      - name: Install Node.js dependencies
+      - name: Install Node.js
         run: |
-          cd ./laravel
-          npm install
+          curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+          sudo apt-get install -y nodejs
 
       - name: Build JavaScript
         run: |

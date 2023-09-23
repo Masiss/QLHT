@@ -27,7 +27,6 @@ jobs:
 
       - name: Build JavaScript
         run: |
-          cd ./laravel
           npm run build
 
       - name: Deploy to GitHub Pages
